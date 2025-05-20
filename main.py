@@ -1,38 +1,53 @@
-from langchain_openai import ChatOpenAI
+from langchain.chat_models import init_chat_model
+from langgraph.prebuilt import create_react_agent
+
 import src.stt
 
 # init
 import os
 if not os.environ.get("OPENAI_API_KEY"):
-    api_key = os.environ["OPENAI_API_KEY"] = "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"
+    api_key = os.environ["OPENAI_API_KEY"] = "11f52000dfbf683a72c0f5743b5bcaa2cfbc3b4789f08b6be2412289e445fafa"
 
 base_url = "https://openrouter.ai/api/v1"
-model = "deepseek/deepseek-v3-base:free"
+model = "together:deepseek-ai/Deepseek-R1-Distill-Llama-70B-free"
 temperature = 0.4
 
-# create agent
-llm = ChatOpenAI(
-        base_url=base_url,
-        api_key=api_key,
-        llm=model,
-        temperature=temperature,
-        max_iterations=3,
-        return_intermediate_steps=True,
-    )
+basemodel = init_chat_model(
+    api_key=api_key,
+    model=model,
+    temperature=temperature,
+)
+
+chatagent = create_react_agent(
+    model=basemodel,
+    tools=[],
+    prompt="""
+You are a helpful assistant.
+"""
+)
+
+promptagents = create_react_agent(
+    model=basemodel,
+    tools=[],
+    prompt="""
+You are a helpful assistant.
+"""
+)
 
 if __name__ == "__main__":
     for i in range(4):
         # get user input
-        prompt = src.stt.SpeechToText().flow()
-        if prompt is None:
+        userinp = src.stt.SpeechToText().flow()
+        if userinp is None:
             i = i - 1
-        print(prompt)
-
-        message = (
-            [
-                ("system", "You are a helpful assistant."),
-                ("user", prompt),
-            ]
-        )
+        print(userinp)
         
-        run_agent = llm.invoke(message)
+        try:
+            agent = chatagent
+            response = agent.invoke(
+                {"messages": [{"role": "user", "content": userinp}]}
+            )
+
+            print(response)
+        except Exception as e:
+            print(f"An error occurred: {str(e)}")

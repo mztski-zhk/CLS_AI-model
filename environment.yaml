@@ -1,10 +1,16 @@
-me: kokoro
+me: tts
 channels:
     - defaults
 dependencies:
     - python==3.12      
-        - libstdcxx~=12.4.0 # Needed to load espeak correctly. Try removing this if you're facing issues with Espeak fallback. 
-            - pip:
-                    - kokoro>=0.3.1
-                            - soundfile
-                                    - misaki[en]
+    - libstdcxx~=12.4.0 # Needed to load espeak correctly. Try removing this if you're facing issues with Espeak fallback. 
+    - pip
+    - kokoro>=0.3.1
+    - soundfile
+    - misaki[en]
+    - numpy
+    - langchain
+    - langchain[together]
+    - langgraph
+    - whisper
+    - sounddevice
