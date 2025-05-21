@@ -64,7 +64,7 @@ if __name__ == "__main__":
         try:
             step = i
 
-            speechresponse = speechagent.invoke(
+            text = speechagent.invoke(
                 {"messages": [{"role": "user", "content": userinp}]},
             )
 
