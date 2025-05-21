@@ -1,14 +1,11 @@
 from langchain.chat_models import init_chat_model
 from langgraph.prebuilt import create_react_agent
 from pydantic import BaseModel, Field
-
-
+import src.tts
 import src.stt
-
 # init
 import os
 
-import src.tts
 if not os.environ.get("OPENAI_API_KEY"):
     api_key = os.environ["OPENAI_API_KEY"] = "11f52000dfbf683a72c0f5743b5bcaa2cfbc3b4789f08b6be2412289e445fafa"
 

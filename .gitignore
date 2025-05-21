@@ -1,3 +1,4 @@
 environment.yaml
 .env
 __pycache__/
+kokoro-tts
