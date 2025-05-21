@@ -10,7 +10,7 @@ class SpeechToText:
         self.model = model_name if model_name == "large" else model_name + ".en"
         self.sample_rate = 16000
         self.channels = 1
-        self.recode_duration = 8
+        self.recode_duration = 5
 
     def loadwhisper(self):
         try:

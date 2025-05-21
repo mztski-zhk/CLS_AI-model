@@ -1,56 +1,17 @@
-from langchain.chat_models import init_chat_model
-from langgraph.prebuilt import create_react_agent
+# 13 inno design macbook
+
 from pydantic import BaseModel, Field
 import src.tts
 import src.stt
-# init
+import src.agent
 import os
-
-if not os.environ.get("OPENAI_API_KEY"):
-    api_key = os.environ["OPENAI_API_KEY"] = "11f52000dfbf683a72c0f5743b5bcaa2cfbc3b4789f08b6be2412289e445fafa"
-
-base_url = "https://openrouter.ai/api/v1"
-model = "together:meta-llama/Llama-3.3-70B-Instruct-Turbo-Free"
-temperature = 0.4
-
-basemodel = init_chat_model(
-    api_key=api_key,
-    model=model,
-    temperature=temperature,
-)
-
-chatagent = create_react_agent(
-    model=basemodel,
-    tools=[],
-    prompt=f"""
-You are a meditation assistant. You have to summarize and enhance the text given to you and give clear and friendly instructions to the user.
-The text is about meditation.
-{"text"}
-You have to respond with user input of "yes" or "no" and if the user input is "yes", you have to continue to help the user meditate else you have to say "FALSE" and do not give any other information.
-Please check the current step is correct and if not, please just say "FALSE" and do not give any other information.
-The current step is {{step}}.
-Answer without structured data, just answer in one paragraph.
-"""
-)
-
-speechagent = create_react_agent(
-    model=basemodel,
-    tools=[],
-    prompt=f"""
-You are a meditation assistant. You have to give a simple conversation to help the user meditate. Please refer to the steps to do meditation below and generate a simple conversation for each step.:
-The current step is {{step}}.
-1:A greeting to the user.
-2.Close your eyes and take a deep breath.
-3.Hear the white noise around you and try to focus on it.
-4.Continue to breathe deeply and let go of any tension in your body.
-5.Imagine a peaceful place and visualize it in your mind which allow yourself to relax and enjoy the moment.
-6.The end of the meditation session.
-The user input will be "yes" or "no" and if the user input is "yes", you have to continue your work else you have to say "FALSE" and do not give any other information.
-Answer without structured data, just answer in one paragraph.
-"""
-)
-
 if __name__ == "__main__":
+    introducton = """
+Hello! We are Utopia, and I am a meditation assistant. I will help you meditate and guide you through the process.
+"""
+    src.tts.TextToSpeech(introducton)
+    os.system("ffplay -nodisp -autoexit -volume 1000 -i 0.wav")
+
     for i in range(6):
         # get user input
         userinp = src.stt.SpeechToText().flow()
@@ -61,11 +22,11 @@ if __name__ == "__main__":
         try:
             step = i
 
-            speechresponse = speechagent.invoke(
+            speechresponse = src.agent.ChatAgent.speech_agent().invoke(
                 {"messages": [{"role": "user", "content": userinp}]},
             )
 
-            chatresponse = chatagent.invoke(
+            chatresponse = src.agent.ChatAgent.chat_agent().invoke(
                 {"messages": [{"role": "user", "content": userinp}]},
             )
 
