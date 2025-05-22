@@ -1,3 +1,4 @@
+# CLA_InnoPrototype_AI-model
 > This repository is for school inno.design project.
 
 ## Deploy
@@ -10,7 +11,7 @@ Verify by:
 python3 --version
 ````
 
-Clone the repository to any directory.(/var/model/project for example)
+Clone the repository to any directory.(For example: /var/model/project)
 
 ### Create environment using conda
 Install conda from conda's official website.
@@ -26,7 +27,7 @@ source .venv/bin/activate
 ````
 
 ## Install libraries
-Hance,install the libraries with
+Hance, install the libraries required with:
 
 ````bash
 # /bin/bash
