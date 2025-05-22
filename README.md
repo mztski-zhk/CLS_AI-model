@@ -1,5 +1,5 @@
 # CLS_InnoPrototype_AI-model
-> This repository is for school inno.design project.
+> This repository is for school inno.design project, will be delete after 1 week later.
 
 ## Deploy
 Make sure you have >=python3.10 installed.
