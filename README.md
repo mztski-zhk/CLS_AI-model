@@ -1,4 +1,4 @@
-# CLA_InnoPrototype_AI-model
+# CLS_InnoPrototype_AI-model
 > This repository is for school inno.design project.
 
 ## Deploy
