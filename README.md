@@ -1,14 +1,15 @@
 # CLS_InnoPrototype_AI-model
-> This repository is for school inno.design project, will be delete after 1 week later.
+> This repository is for school inno.design project, will be deleted after 6 days later.
 
 ## Deploy
-Make sure you have >=python3.10 installed.
+Make sure you have >=python3.10 and ffmpeg(ffplay) installed.
 
 Verify by:
 
 ````bash
 # /bin/bash
 python3 --version
+ffplay --help
 ````
 
 Clone the repository to any directory.(For example: /var/model/project)
@@ -35,6 +36,7 @@ pip install -r requirements.txt
 ````
 
 ## Running
+
 ````bash
 python main.py
 ````
